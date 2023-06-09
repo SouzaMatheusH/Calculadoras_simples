@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="calc_style.css">
+    <link rel="stylesheet" href="imc_style.css">
+
+    <!-- Biblioteca JQuery-->
+    <script src="code.jquery.com_jquery-3.7.0.min.js"></script>
+    
+    <!-- Fontes utilizadas -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@500&family=Roboto:wght@300&family=Ubuntu&display=swap" rel="stylesheet">
+
+    <title>Calculadora Simples</title>
+</head>
+<body>
+
+    <!--Menu de navegação -->
+    <nav>
+        <ul>
+            <li id="calc_icon"><img title="Calculadora" src="calculadora.png"></li>
+            <li id="imc_icon"><img title="IMC" src="imc.png"></li>
+        </ul>
+    </nav>
+    
+    <!-- Div Calculadora -->
+    <div id="calc_aba">
+
+        <!-- Nome topo -->
+        <header>
+            <h1 class="nome">Projeto por: Matheus Souza</h1>
+        </header>
+
+        <!-- Calculadora -->
+        <div class="calculadora">
+            <p>Calculadora</p>
+            <p dir="rtl" id="resultado"></p>
+
+            <!-- Teclado -->
+            <table>
+                <tr>
+                    <td><button class="botao_simples" onclick="clean()">CE</button></td>
+                    <td><button class="botao_simples" onclick="deleteCaracter()">C</button></td>
+                    <td><button class="botao_simples" onclick="insert('/')">/</button></td>
+                    <td><button class="botao_simples" onclick="insert('*')">X</button></td>
+                </tr>
+                <tr>
+                    <td><button class="botao_simples" onclick="insert('7')">7</button></td>
+                    <td><button class="botao_simples" onclick="insert('8')">8</button></td>
+                    <td><button class="botao_simples" onclick="insert('9')">9</button></td>
+                    <td><button class="botao_simples" onclick="insert('-')">-</button></td>
+                </tr>
+                <tr>
+                    <td><button class="botao_simples" onclick="insert('4')">4</button></td>
+                    <td><button class="botao_simples" onclick="insert('5')">5</button></td>
+                    <td><button class="botao_simples" onclick="insert('6')">6</button></td>
+                    <td><button class="botao_simples" onclick="insert('+')">+</button></td>
+                </tr>
+                <tr>
+                    <td><button class="botao_simples" onclick="insert('1')">1</button></td>
+                    <td><button class="botao_simples" onclick="insert('2')">2</button></td>
+                    <td><button class="botao_simples" onclick="insert('3')">3</button></td>
+                    <td rowspan="2"><button class="botao_igual" onclick="calculate()">=</button></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><button class="botao_zero" onclick="insert('0')">0</button></td>
+                    <td><button class="botao_simples" onclick="insert('.')">.</button></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <!-- Div IMC -->
+    <div id="imc_aba">
+        <div class="imc">
+            <p>Calculadora de IMC</p>
+            <form>
+                <input type="number" placeholder="Sua ltura" id="campoAltura"></input><br>
+                <input type="number" placeholder="Seu peso" id="campoPeso"></input>
+                <input type="submit" class="enviar" onclick="calcularImc()">
+            </form>
+            <p id="imc_resultado"><br><br></p>
+        </div>
+    </div>
+
+    <!-- Cálculos -->
+    <script>
+    // Calculadora simples    
+        // inserindo números 
+        function insert(num){
+            var numero = document.getElementById('resultado').innerHTML;
+            document.getElementById('resultado').innerHTML = numero + num;
+        }
+
+        // Limpar todos
+        function clean(){
+            document.getElementById('resultado').innerHTML = "";
+        }
+
+        // Apagar
+        function deleteCaracter(){
+            var resultado = document.getElementById('resultado').innerHTML;
+            document.getElementById('resultado').innerHTML = resultado.substring(0, resultado.length -1);
+        }
+
+        // Calcular
+        function calculate(){
+            var resultado = document.getElementById('resultado').innerHTML;
+            var arredondar = eval(resultado).toFixed(2);
+            if(resultado) {
+                document.getElementById('resultado').innerHTML = arredondar;
+            } else {
+                document.getElementById('resultado').innerHTML = "0";
+            }
+        }
+
+        // IMC
+        function calcularImc(){
+            var altura = document.getElementById('campoAltura').value;
+            var peso = document.getElementById('campoPeso').value;
+            var arredondarImc = (peso/(altura*altura)).toFixed(2);
+
+            if (altura) {
+                document.getElementById('imc_resultado').innerHTML = "Seu IMC é de: " + arredondarImc + "Kg/m2";
+            } else {
+                document.getElementById('imc_resultado').innerHTML = "0";
+            }
+        }
+    </script>
+
+    <!-- Efeitos em JQuery -->
+    <script>
+        $(function redimendionar(e){
+            // Redefinir altura da tela
+            var alturaTela = $(window).height();
+            var larguraLinha = $('.imc').width();
+
+            $('#calc_aba').css("height" , alturaTela);
+            $('#imc_aba').css("height" , alturaTela);
+
+            $('.sep').css("width" , larguraLinha);
+        
+            // Animação de scrolling
+            $('nav li:first-child').click(function(e) {
+                $('html, body').animate( { scrollTop: $('#calc_aba').offset().top } , 800 );
+            });
+            $('nav li:nth-child(2)').click(function(e) {
+                $('html, body').animate( { scrollTop: $('#imc_aba').offset().top } , 800 );
+            });
+            $(window).resize(function(e) {
+		        redimencionar();
+	        });
+
+	        redimencionar();
+        }); 
+    </script>
+</body>
+</html>
