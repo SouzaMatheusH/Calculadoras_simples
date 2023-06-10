@@ -18,7 +18,7 @@
     color: white;
     position: absolute;
     background-color: #121212;
-    left: 51%;
+    left: 52%;
     top: 53%;
     transform: translate(-50%,-50%);
     border-radius: 2em;
@@ -78,7 +78,7 @@ form {
     border: none;
     width: 20em;
     height: 5em;
-    background-color: black;
+    background-color: rgb(31, 31, 31);
     padding: 0px;
     text-align: center;
 }
